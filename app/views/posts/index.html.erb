@@ -1,0 +1,31 @@
+
+<h1>Listing posts </h1>
+<table>
+  <tr>
+    <th>User</th>
+    <th>Title</th>
+    <th>plan</th>
+    <th>research</th>
+    <th>act</th>
+    <th>observe</th>
+    <th>evaluate</th>
+    <th>reflect</th>
+  </tr>
+
+  <% @posts.each do |post| %>
+    <tr>
+      <td><%= post.user.email %></td>
+      <td><%= post.title %></td>
+      <td><%= post.plan %></td>
+      <td><%= post.research %></td>
+      <td><%= post.act %></td>
+      <td><%= post.observe %></td>
+      <td><%= post.evaluate %></td>
+      <td><%= post.reflect %></td>
+      <td><%= link_to 'Show', post_path(post) %></td>
+      <td><%= link_to 'Edit', edit_post_path(post) %></td>
+      <td><%= link_to 'Destroy', post_path(post), method: :delete,
+                                                  date: { confirm: 'are you sure'} %></td>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,90 @@
+<h2>Post</h2>
+<p>
+  <strong>User:</strong>
+  <%= @post.user.email %>
+</p>
+
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>plan:</strong>
+  <%= @post.plan %>
+</p>
+
+<p>
+  <strong>research:</strong>
+  <%= @post.research %>
+</p>
+
+<p>
+  <strong>act:</strong>
+  <%= @post.act %>
+</p>
+
+<p>
+  <strong>observe:</strong>
+  <%= @post.observe %>
+</p>
+
+<p>
+  <strong>evaluate:</strong>
+  <%= @post.evaluate %>
+</p>
+
+<p>
+  <strong>reflect:</strong>
+  <%= @post.reflect %>
+</p>
+
+    <% if current_user.is_postlike?(@post)%>
+    <%= link_to image_tag("heart_filled", size: "15x15"), post_like_path(@post), method: "post" %>
+    <% else %>
+    <%= link_to image_tag("heart", size: "15x15"), post_like_path(@post), method: "post" %>
+    <% end %>
+    <%= @post.likes.size%>명이 좋아합니다.<br><<br>  >
+
+
+
+
+<h2>Comments</h2>
+<% @post.comments.each do |comment| %>
+  <p>
+    <strong>user:</strong>
+    <%= comment.user.email %>
+    <strong>Content:</strong>
+    <%= comment.content %>
+  </p>
+  <p>
+    <%= link_to 'Destroy Comment', [comment.post, comment],
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %>
+  </p>
+  </p>
+    <% if current_user.is_commentlike?(comment) %>
+    <%= link_to image_tag("heart_filled", size: "15x15"), post_comment_like_path(comment.post, comment), method: "post" %>
+    <% else %>
+    <%= link_to image_tag("heart", size: "15x15"), post_comment_like_path(comment.post, comment), method: "post" %>
+    <% end %>
+    <%= comment.likes.size%>명이 좋아합니다.<br><br>
+  <p>
+<% end %>
+
+
+
+
+<h2>Add a comment:</h2>
+<%= form_for([@post, @post.comments.build]) do |f| %>
+  <p>
+    <%= f.label :content %><br>
+    <%= f.text_area :content %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+<%= link_to 'back', posts_path %>
+<%= link_to 'edit', edit_post_path %>
